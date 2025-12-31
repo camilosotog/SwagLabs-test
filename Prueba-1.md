@@ -67,31 +67,96 @@ Respóndeme:
 
 ### 🎯 Objetivo
 
-Validar si el sistema soporta carga en login y navegación.
+Validar rendimiento y estabilidad de los endpoints más críticos de un e-commerce.
 
-### 📌 Requerimiento
+### 🔗 Endpoints a Probar
 
-Diseña una prueba de carga para:
+#### 1. Listado de Productos
+```http
+GET /products
+```
 
-- Login
-- Listado de productos
+#### 2. Detalle de Producto
+```http
+GET /products/{id}
+```
 
-### 🧪 Condiciones
+#### 3. Creación de Carrito
+```http
+POST /carts
+```
 
-- 100 usuarios concurrentes
-- Ramp-up gradual
-- Duración total: 5 minutos
+#### 4. Login
+```http
+POST /auth/login
+```
 
-### 📦 Entregable
+### 🧪 Escenario de Carga (k6)
 
-Explícame:
+- **100 usuarios concurrentes**
+- **Ramp-up progresivo** (incremental)
+- **Duración: 5 minutos**
 
-- Qué requests atacarías
-- Qué métricas observarías (p95, errores, throughput, etc.)
-- Criterios de aceptación
-- Qué decisión tomarías si:
-  - p95 > 3s
-  - error rate > 2%
+#### Distribución de Endpoints
+
+| Endpoint | Porcentaje | Usuarios |
+|----------|-----------|----------|
+| Listado | 50% | 50 |
+| Detalle | 20% | 20 |
+| Login | 20% | 20 |
+| Creación de carrito | 10% | 10 |
+
+### 📊 Métricas Esperadas
+
+| Métrica | Objetivo |
+|---------|----------|
+| **p95** | < 2.5s |
+| **Error rate** | < 1% |
+| **Errores 5xx** | 0 |
+| **Throughput** | Estable |
+
+### 📦 TU ENTREGABLE (Modo Real)
+
+#### 1️⃣ ¿Qué endpoints probarías primero y por qué?
+
+*Priorización de negocio*
+
+**Respuesta esperada:**
+- Orden de criticidad basada en impacto
+- Justificación clara por cada endpoint
+- Análisis de impacto en usuario y negocio
+
+#### 2️⃣ ¿Qué métricas usarías como stopper para no salir a producción?
+
+**Respuesta esperada:**
+- Criterios de bloqueo automático
+- Umbrales definidos por endpoint
+- Diferencia entre "caution zone" y "green light"
+
+#### 3️⃣ Si el login responde:
+
+```
+p95 = 4s
+error rate = 3%
+```
+
+**👉 ¿Qué haces como QA?**
+
+- ¿Bloqueas release?
+- ¿Escalas a infraestructura?
+- ¿Aceptas riesgo calculado?
+
+**Respuesta esperada:**
+- Análisis de impacto
+- Decisión justificada
+- Plan de acción
+
+#### 4️⃣ ¿Qué NO probarías con k6 en este escenario y por qué?
+
+**Respuesta esperada:**
+- Herramientas alternativas
+- Limitaciones de k6
+- Cuándo usar cada herramienta
 
 ## 🔐 Parte 3 – Pruebas Negativas y de Seguridad
 
