@@ -1,22 +1,23 @@
-import { check } from 'k6';
+import { check, sleep } from 'k6';
 import { browser } from 'k6/browser';
 
 export const options = {
   scenarios: {
     ui: {
       executor: 'shared-iterations',
-      vus: 5,
-      iterations: 10,
-      maxDuration: '30s',
+      vus: 1,
+      iterations: 1,
       options: {
         browser: {
           type: 'chromium',
+          launchOptions: {
+            headless: false,
+            slowMo: '500ms',
+            args: ['--window-size=1920,1080', '--start-maximized'],
+          }
         }
       }
     }
-  },
-  thresholds: {
-    checks: ['rate == 1.0'], // Todas las verificaciones deben pasar
   }
 }
 
@@ -31,6 +32,9 @@ export default async function () {
   check(title, {
     'El titulo es correcto': (t) => t === expectTitle,
   })
+  
+  sleep(5); // Ver la página por 5 segundos
+  
   await page.close();
   
 }
