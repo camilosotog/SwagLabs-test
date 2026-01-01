@@ -12,6 +12,11 @@ export const options = {
     http_req_duration: ['max < 200'],   // El tiempo máximo de solicitud debe ser menor a 200 ms
     http_req_duration: ['med < 100'],   // El tiempo mediano de solicitud debe ser menor a 100 ms*/
     http_req_duration: ['p(90) < 100', 'p(95) < 130', 'p(99) < 150', 'min < 50', 'med < 100', 'max < 200'], // Múltiples percentiles para el tiempo de solicitud
+    http_req_failed: ['rate < 0.01'], // Menos del 1% de las solicitudes deben fallar
+    http_req_waiting: ['p(95) < 80'], // El 95% del tiempo de espera debe ser menor a 80 ms
+    http_req_sending: ['p(95) < 30'], // El 95% del tiempo de envío debe ser menor a 30 ms
+    http_req_receiving: ['p(95) < 50'], // El 95% del tiempo de recepción debe ser menor a 50 ms
+    iterations: ['count > 100'], // Debe haber más de 100 iteraciones en total
   }
 }
 
