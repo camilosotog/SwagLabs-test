@@ -25,5 +25,13 @@ export default function () {
   console.log('Response Http wait ' + String(response.timings.waiting));
   console.log('Response Http receiving ' + String(response.timings.receiving));
 
+  // Other responses (Clase 22)
+  console.log('Response Cookies ' + String(response.cookies));
+  console.log('Response Error ' + String(response.error));
+  console.log('Response Error_code ' + String(response.error_code));
+  console.log('Response Ip Remota ' + String(response.remote_ip));
+  console.log('Response Puerto remoto ' + String(response.remote_port));
+
+
   sleep(1);
 }
